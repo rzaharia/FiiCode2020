@@ -6,3 +6,4 @@ In this area there will participate teams of 2-4 people who will be challenged t
 The actual round will start on February 10 and will end on April 11; in this weeks, the teams will have time to develop a game, using whatever technology they want.  
 GameDev 2020’s Task: Create a game based on the “Retro” theme, in conformity with FIICode’s regulations.  
 Link related: https://fiicode.asii.ro/gamedev  
+Trello link : https://trello.com/b/688JHQX9/retrofun
