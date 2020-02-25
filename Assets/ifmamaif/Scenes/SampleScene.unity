@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -179,6 +180,48 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4803682400954308, guid: 91b02df2665fefc43891b5d40f4f9932, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803682400954308, guid: 91b02df2665fefc43891b5d40f4f9932, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4803682400954308, guid: 91b02df2665fefc43891b5d40f4f9932, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
+        type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
+        type: 3}
+      propertyPath: useRigidbodyForVelocity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
+        type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 198977554003111104, guid: 91b02df2665fefc43891b5d40f4f9932,
         type: 3}
       propertyPath: ShapeModule.type
@@ -228,48 +271,6 @@ PrefabInstance:
         type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 1.0000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4803682400954308, guid: 91b02df2665fefc43891b5d40f4f9932, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4803682400954308, guid: 91b02df2665fefc43891b5d40f4f9932, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4803682400954308, guid: 91b02df2665fefc43891b5d40f4f9932, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
-        type: 3}
-      propertyPath: simulationSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
-        type: 3}
-      propertyPath: InitialModule.maxNumParticles
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
-        type: 3}
-      propertyPath: useRigidbodyForVelocity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
-        type: 3}
-      propertyPath: moveWithTransform
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 198790791795691770, guid: 91b02df2665fefc43891b5d40f4f9932,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91b02df2665fefc43891b5d40f4f9932, type: 3}
@@ -874,6 +875,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
