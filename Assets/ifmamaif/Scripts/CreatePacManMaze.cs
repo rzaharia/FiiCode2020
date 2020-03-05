@@ -11,7 +11,6 @@ public class CreatePacManMaze : MonoBehaviour
     public int collumns = 28;
     public int rows = 31;
 
-
     private GameObject rootGameObject = null;
     [SerializeField]
     public GameObject[,] walls;
