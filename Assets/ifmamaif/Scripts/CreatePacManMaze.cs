@@ -59,47 +59,11 @@ public class CreatePacManMaze : MonoBehaviour
     {
         walls = new GameObject[rows, collumns];
 
-        ///
         for (int i = 0; i < rows ; i++)
             for (int j = 0; j < collumns ; j++)
             {
                 CreateGameObject(i, j, null);
             }
-
-
-        /// //Top
-        /// for (int j = 1; j < collumns-1; j++)
-        /// {
-        ///     CreateGameObject(0, j, doubleWallTop);
-        /// }
-        /// //Left
-        /// for (int j = 1; j < rows - 1; j++)
-        /// {
-        ///     CreateGameObject(j, 0, doubleWallLeft);
-        /// }
-        /// //Right
-        /// for (int j = 1; j < rows-1; j++)
-        /// {
-        ///     CreateGameObject(j,collumns-1, doubleWallRight );
-        /// }
-        /// //Bottom
-        /// for (int j = 1; j < collumns-1; j++)
-        /// {
-        ///     CreateGameObject(rows - 1, j, doubleWallDown);
-        /// }
-        ///
-        /// CreateGameObject(0, 0, doubleCornerTopLeft);
-        /// CreateGameObject(rows - 1, 0, doubleCornerBottomLeft);
-        /// CreateGameObject(0, collumns - 1, doubleCornerTopRight);
-        /// CreateGameObject(rows - 1, collumns - 1, doubleCornerBottomRight);
-        ///
-        ///
-        /// // Create the points
-        /// for (int i = 1; i < rows - 1; i++)
-        ///     for (int j = 1; j < collumns - 1; j++)
-        ///     {
-        ///         CreateGameObject(i, j, point);
-        ///     }
     }
 
 
@@ -143,11 +107,9 @@ public class CreatePacManMaze : MonoBehaviour
 
         for (int i = 0; i < rows; i++)
         {
-            // writer.Write(walls[i, 0].GetComponent<SpriteRenderer>().sprite.name);
             writer.Write("{0,2:D3}", FindIDSprite(walls[i, 0].GetComponent<SpriteRenderer>().sprite.name));
             for (int j = 1; j < collumns; j++)
             {
-                //writer.Write("," + walls[i, j].GetComponent<SpriteRenderer>().sprite.name);
                 writer.Write(" , {0,2:D3}", FindIDSprite(walls[i, j].GetComponent<SpriteRenderer>().sprite.name));
             }
             writer.Write("\n");
@@ -169,12 +131,7 @@ public class CreatePacManMaze : MonoBehaviour
         {
             string[] line = reader.ReadLine().Split(',');
             mapSprites.Add(int.Parse(line[0]),line[1]);
-            //mapTextures[i] = reader.ReadLine();
         }
-        //for (int i = 0; i < sprites.Length; i++)
-        //{
-        //    reader.ReadLine();
-        //}
 
         string holeFileContent = reader.ReadToEnd();
         string[] lines = holeFileContent.Split('\n');
@@ -184,8 +141,6 @@ public class CreatePacManMaze : MonoBehaviour
             for(int j=0;j< cells.Length;j++)
             {
                 walls[i, j].GetComponent<SpriteRenderer>().sprite = GetSprite(mapSprites[int.Parse(cells[j])]);
-                //walls[i,j].GetComponent<SpriteRenderer>().sprite = GetSprite(mapTextures[int.Parse(cells[j])]);
-                //walls[i, j].GetComponent<SpriteRenderer>().sprite = GetSprite(cells[j]);
             }
         }
 
