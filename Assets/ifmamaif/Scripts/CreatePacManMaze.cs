@@ -35,12 +35,6 @@ public class CreatePacManMaze : MonoBehaviour
         LoadScript();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void CreateGameObject(int i, int j,Sprite newSprite = null)
     {
         GameObject gameObject = new GameObject(i + " " + j);
@@ -157,19 +151,6 @@ public class CreatePacManMaze : MonoBehaviour
         }
 
         return sprites[0];
-    }
-
-    int GetIDSprite(string name)
-    {
-        for (int i=0; i<sprites.Length;i++)
-        {
-            if (sprites[i].name == name)
-            {
-                return i;
-            }
-        }
-
-        return 0;
     }
 
     int FindIDSprite(string name)
