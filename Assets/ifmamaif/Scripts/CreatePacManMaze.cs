@@ -30,6 +30,7 @@ public class CreatePacManMaze : MonoBehaviour
         rootGameObject = new GameObject("PacMan-Maze");
         rootGameObject.transform.SetParent(this.gameObject.transform);
         rootGameObject.transform.localPosition = new Vector3(0, 0, 0);
+        rootGameObject.transform.localScale = new Vector3(1, 1, 1);
 
         CreateMaze();
         LoadScript();
@@ -43,7 +44,8 @@ public class CreatePacManMaze : MonoBehaviour
             spriteRenderer.sprite = newSprite;
 
         gameObject.transform.SetParent(rootGameObject.transform);
-        gameObject.transform.localPosition = new Vector3(1 + j, 30-i, -0.1672395f);
+        gameObject.transform.localPosition = new Vector3(1 + j, 30 - i, 0);// -0.1672395f);
+        gameObject.transform.localScale = new Vector3(1, 1, 1);
 
         walls[i, j] = gameObject;
     }
