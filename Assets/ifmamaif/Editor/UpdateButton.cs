@@ -11,10 +11,10 @@ public class UpdateButton : Editor
         DrawDefaultInspector();
 
         CreatePacManMaze myScript = (CreatePacManMaze)target;
-        if(GUILayout.Button("Update script"))
-        {
-            myScript.ReStart();
-        }
+        //if(GUILayout.Button("Update script"))
+        //{
+        //    myScript.ReStart();
+        //}
         if (GUILayout.Button("Save script"))
         {
             myScript.SaveScript();
