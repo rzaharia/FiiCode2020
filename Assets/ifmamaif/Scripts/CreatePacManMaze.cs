@@ -15,11 +15,21 @@ public class CreatePacManMaze : MonoBehaviour
     [SerializeField]
     public GameObject[,] walls;
 
+    enum TypeWall
+    {
+        Wall = 0,
+        Empty = 1,
+        Point = 2,
+        Power = 3
+    };
+
     private static readonly string saveFile = "PacManMaze.load";
     private static readonly string pathSaveFile = "Assets/ifmamaif/Resources/" + saveFile;
     private int oldCollumns;
     private int oldRows;
-    private Dictionary<int, string> mapSprites = new Dictionary<int, string>();
+    private Dictionary<int, (TypeWall,string)> mapSprites = new Dictionary<int, (TypeWall, string)>();
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +46,7 @@ public class CreatePacManMaze : MonoBehaviour
         LoadScript();
     }
 
-    void CreateGameObject(int i, int j,Sprite newSprite = null)
+    void CreateGameObject(int i, int j,Sprite newSprite = null, TypeWall type = TypeWall.Empty)
     {
         GameObject gameObject = new GameObject(i + " " + j);
         SpriteRenderer spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
@@ -46,6 +56,7 @@ public class CreatePacManMaze : MonoBehaviour
         gameObject.transform.SetParent(rootGameObject.transform);
         gameObject.transform.localPosition = new Vector3(1 + j, 30 - i, 0);// -0.1672395f);
         gameObject.transform.localScale = new Vector3(1, 1, 1);
+        SetType(gameObject, type);
 
         walls[i, j] = gameObject;
     }
@@ -97,7 +108,7 @@ public class CreatePacManMaze : MonoBehaviour
 
         foreach (var elem in mapSprites)
         {
-            writer.WriteLine("{0,2:D3} ,{1}", elem.Key, elem.Value);
+            writer.WriteLine("{0,2:D3} ,{1} ,{2}", elem.Key, elem.Value.Item1,elem.Value.Item2);
         }
 
         for (int i = 0; i < rows; i++)
@@ -125,7 +136,7 @@ public class CreatePacManMaze : MonoBehaviour
         for (int i = 0; i < numberOfSprites; i++)
         {
             string[] line = reader.ReadLine().Split(',');
-            mapSprites.Add(int.Parse(line[0]),line[1]);
+            mapSprites.Add(int.Parse(line[0]),((TypeWall)int.Parse(line[1]) ,line[2]));
         }
 
         string holeFileContent = reader.ReadToEnd();
@@ -135,7 +146,10 @@ public class CreatePacManMaze : MonoBehaviour
             string[] cells = lines[i].Split(',');
             for(int j=0;j< cells.Length;j++)
             {
-                walls[i, j].GetComponent<SpriteRenderer>().sprite = GetSprite(mapSprites[int.Parse(cells[j])]);
+                int index = int.Parse(cells[j]);
+                walls[i, j].GetComponent<SpriteRenderer>().sprite = GetSprite(mapSprites[index].Item2);
+                SetType(walls[i, j], mapSprites[index].Item1);
+                walls[i, j].SetActive(true);
             }
         }
 
@@ -159,12 +173,34 @@ public class CreatePacManMaze : MonoBehaviour
     {
         foreach ( var elem in mapSprites)
         {
-            if (elem.Value == name)
+            if (elem.Value.Item2 == name)
             {
                 return elem.Key;
             }
         }
 
         return 0;
+    }
+
+    void SetType(GameObject gameObject,TypeWall type)
+    {
+        switch (type)
+        {
+            case TypeWall.Empty:
+                gameObject.tag = "Empty";
+                break;
+            case TypeWall.Point:
+                gameObject.tag = "Point";
+                break;
+            case TypeWall.Power:
+                gameObject.tag = "Power";
+                break;
+            case TypeWall.Wall:
+                gameObject.tag = "Wall";
+                break;
+            default:
+                gameObject.tag = "Empty";
+                break;
+        }
     }
 }
