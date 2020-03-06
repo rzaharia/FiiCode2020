@@ -20,7 +20,8 @@ public class CreatePacManMaze : MonoBehaviour
         Wall = 0,
         Empty = 1,
         Point = 2,
-        Power = 3
+        Power = 3,
+        Teleport =4,
     };
 
     private static readonly string saveFile = "PacManMaze.load";
@@ -112,8 +113,10 @@ public class CreatePacManMaze : MonoBehaviour
 
         foreach (var elem in mapSprites)
         {
-            writer.WriteLine("{0,2:D3} ,{1} ,{2}", elem.Key, elem.Value.Item1,elem.Value.Item2);
+            writer.WriteLine("{0,2:D3} ,{1} ,{2}", elem.Key, (int)(elem.Value.Item1),elem.Value.Item2);
         }
+
+        writer.WriteLine("{0} , {1}", rows, collumns);
 
         for (int i = 0; i < rows; i++)
         {
@@ -136,11 +139,23 @@ public class CreatePacManMaze : MonoBehaviour
         
         int numberOfSprites = int.Parse(reader.ReadLine());
         mapSprites.Clear();
-        
+        string[] line;
+
         for (int i = 0; i < numberOfSprites; i++)
         {
-            string[] line = reader.ReadLine().Split(',');
+            line = reader.ReadLine().Split(',');
             mapSprites.Add(int.Parse(line[0]),((TypeWall)int.Parse(line[1]) ,line[2]));
+        }
+
+        line = reader.ReadLine().Split(',');
+        int newRows = int.Parse(line[0]);
+        int newCollumns = int.Parse(line[1]);
+
+        if(newRows != rows || newCollumns != collumns)
+        {
+            collumns = newCollumns;
+            rows = newRows;
+            ReStart();
         }
 
         string holeFileContent = reader.ReadToEnd();
@@ -201,6 +216,9 @@ public class CreatePacManMaze : MonoBehaviour
                 break;
             case TypeWall.Wall:
                 gameObject.tag = "Wall";
+                break;
+            case TypeWall.Teleport:
+                gameObject.tag = "Teleport";
                 break;
             default:
                 gameObject.tag = "Empty";
