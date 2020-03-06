@@ -57,10 +57,6 @@ public class CreatePacManMaze : MonoBehaviour
         gameObject.transform.SetParent(rootGameObject.transform);
         gameObject.transform.localPosition = new Vector3(1 + j, 30 - i, 0);// -0.1672395f);
         gameObject.transform.localScale = new Vector3(1, 1, 1);
-        BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
-        boxCollider.isTrigger = true;
-        boxCollider.size = new Vector2(0.5f, 0.5f);
-        gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         SetType(gameObject, type);
 
         walls[i, j] = gameObject;
@@ -210,19 +206,31 @@ public class CreatePacManMaze : MonoBehaviour
                 break;
             case TypeWall.Point:
                 gameObject.tag = "Point";
+                SetCollision(gameObject);
                 break;
             case TypeWall.Power:
                 gameObject.tag = "Power";
+                SetCollision(gameObject);
                 break;
             case TypeWall.Wall:
                 gameObject.tag = "Wall";
+                SetCollision(gameObject);
                 break;
             case TypeWall.Teleport:
                 gameObject.tag = "Teleport";
+                SetCollision(gameObject);
                 break;
             default:
                 gameObject.tag = "Empty";
                 break;
         }
+    }
+
+    void SetCollision(GameObject gameObject)
+    {
+        BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
+        boxCollider.size = new Vector2(0.5f, 0.5f);
+        gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
     }
 }
