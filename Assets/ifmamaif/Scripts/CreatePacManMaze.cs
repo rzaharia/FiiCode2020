@@ -56,6 +56,10 @@ public class CreatePacManMaze : MonoBehaviour
         gameObject.transform.SetParent(rootGameObject.transform);
         gameObject.transform.localPosition = new Vector3(1 + j, 30 - i, 0);// -0.1672395f);
         gameObject.transform.localScale = new Vector3(1, 1, 1);
+        BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
+        boxCollider.size = new Vector2(0.5f, 0.5f);
+        gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         SetType(gameObject, type);
 
         walls[i, j] = gameObject;

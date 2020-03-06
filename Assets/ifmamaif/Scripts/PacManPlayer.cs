@@ -7,6 +7,7 @@ public class PacManPlayer : MonoBehaviour {
 	public float speed = 100.0f;
 
 	private Vector2 direction = Vector2.zero;
+	private Vector2 blockDirection = Vector2.zero;
 
 	// Use this for initialization
 	void Start () {
@@ -41,34 +42,60 @@ public class PacManPlayer : MonoBehaviour {
 
 			direction = Vector2.down;
 		}
+
+		if(direction == blockDirection)
+		{
+			direction = Vector2.zero;
+		}
+		else
+		{
+			blockDirection = Vector2.zero;
+		}
 	}
 
 	void Move () {
+		if (direction == Vector2.zero)
+			return;
 
 		transform.localPosition += (Vector3)(direction * speed) * Time.deltaTime;
 	}
 
-	void UpdateOrientation () {
+	void UpdateOrientation()
+	{
+		if (direction == Vector2.left)
+		{
+			transform.localRotation = Quaternion.Euler(0, 0, 180);
+		}
+		else if (direction == Vector2.right)
+		{
+			transform.localRotation = Quaternion.Euler(0, 0, 0);
+		}
+		else if (direction == Vector2.up)
+		{
+			transform.localRotation = Quaternion.Euler(0, 0, 90);
+		}
+		else if (direction == Vector2.down)
+		{
+			transform.localRotation = Quaternion.Euler(0, 0, 270);
+		}
+	}
 
-		if (direction == Vector2.left) {
 
-			//transform.localScale = new Vector3 (-1, 1, 1);
-			transform.localRotation = Quaternion.Euler (0, 0, 180);
-
-		} else if (direction == Vector2.right) {
-
-			//transform.localScale = new Vector3 (1, 1, 1);
-			transform.localRotation = Quaternion.Euler (0, 0, 0);
-
-		} else if (direction == Vector2.up) {
-
-		//	transform.localScale = new Vector3 (1, 1, 1);
-			transform.localRotation = Quaternion.Euler (0, 0, 90);
-
-		} else if (direction == Vector2.down) {
-
-			//transform.localScale = new Vector3 (1, 1, 1);
-			transform.localRotation = Quaternion.Euler (0, 0, 270);
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.CompareTag("Wall"))
+		{
+			transform.localPosition -= (Vector3)(direction * speed) * Time.deltaTime;
+			blockDirection = direction;
+			direction = Vector2.zero;
+		}
+		else if(collision.gameObject.CompareTag("Point"))
+		{
+			collision.gameObject.SetActive(false);
+		}
+		else if (collision.gameObject.CompareTag("Power"))
+		{
+			collision.gameObject.SetActive(false);
 		}
 	}
 }
