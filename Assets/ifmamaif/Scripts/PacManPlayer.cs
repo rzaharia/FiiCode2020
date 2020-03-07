@@ -8,7 +8,7 @@ public class PacManPlayer : MonoBehaviour {
 
 	private Vector2 direction = Vector2.zero;
 	private Vector2 blockDirection = Vector2.zero;
-
+	private Vector3 distanceMoved = Vector3.zero;
 	// Use this for initialization
 	void Start () {
 		
@@ -57,7 +57,8 @@ public class PacManPlayer : MonoBehaviour {
 		if (direction == Vector2.zero)
 			return;
 
-		transform.localPosition += (Vector3)(direction * speed) * Time.deltaTime;
+		distanceMoved = (Vector3)(direction * speed) * Time.deltaTime;
+		transform.localPosition += distanceMoved;
 	}
 
 	void UpdateOrientation()
@@ -83,9 +84,12 @@ public class PacManPlayer : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		if (direction == Vector2.zero)
+			return;
+
 		if (collision.gameObject.CompareTag("Wall"))
 		{
-			transform.localPosition -= (Vector3)(direction * speed) * Time.deltaTime;
+			transform.localPosition -= distanceMoved;
 			blockDirection = direction;
 			direction = Vector2.zero;
 		}
