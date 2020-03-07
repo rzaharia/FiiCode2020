@@ -215,6 +215,7 @@ public class CreatePacManMaze : MonoBehaviour
             case TypeWall.Wall:
                 gameObject.tag = "Wall";
                 SetCollision(gameObject);
+                gameObject.GetComponent<SpriteRenderer>().material = generalMaterial;
                 break;
             case TypeWall.Teleport:
                 gameObject.tag = "Teleport";
