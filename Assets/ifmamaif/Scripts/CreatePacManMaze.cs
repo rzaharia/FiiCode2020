@@ -6,35 +6,42 @@ using UnityEditor;
 
 public class CreatePacManMaze : MonoBehaviour
 {
-    public Sprite[] sprites;
-    public Material generalMaterial;
-    public int collumns = 28;
-    public int rows = 31;
-
-    private GameObject rootGameObject = null;
-    [SerializeField]
-    public GameObject[,] walls;
-
     enum TypeWall
     {
         Wall = 0,
         Empty = 1,
         Point = 2,
         Power = 3,
-        Teleport =4,
+        Teleport = 4,
     };
 
-    private static readonly string saveFile = "PacManMaze.load";
-    private static readonly string pathSaveFile = "Assets/ifmamaif/Resources/" + saveFile;
+    [SerializeField]
+    static private GameObject[,] walls = null;
+    [SerializeField]
+    private Sprite[] sprites = null;
+    [SerializeField]
+    private Material generalMaterial = null;
+
+    private static int collumns = 28;
+    private static int rows = 31;
+    private GameObject rootGameObject = null;
+    private static readonly string pathSaveFile = "Assets/ifmamaif/Resources/PacMan/PacManMaze.load";
+    private static readonly string pathToSprites = "PacMan/Textures";
+    private static readonly string pathToGeneralMaterial = "PacMan/Materials/Text_Color";
     private int oldCollumns;
     private int oldRows;
     private Dictionary<int, (TypeWall,string)> mapSprites = new Dictionary<int, (TypeWall, string)>();
-
-
+    private static Vector2 distanceBetweenWalls;
 
     // Start is called before the first frame update
     void Start()
     {
+        object[] loadedSprites = Resources.LoadAll(pathToSprites, typeof(Sprite));
+        sprites = new Sprite[loadedSprites.Length];
+        loadedSprites.CopyTo(sprites, 0);
+
+        generalMaterial = Resources.Load<Material>(pathToGeneralMaterial);
+        
         oldCollumns = collumns;
         oldRows = rows;
 
@@ -44,6 +51,12 @@ public class CreatePacManMaze : MonoBehaviour
         rootGameObject.transform.localScale = new Vector3(1, 1, 1);
 
         CreateMaze();
+
+        distanceBetweenWalls = new Vector2(
+           (walls[rows - 1, collumns - 1].transform.position.x - walls[0, 0].transform.position.x) / collumns,
+            (walls[0, 0].transform.position.y - walls[rows - 1, collumns - 1].transform.position.y) / rows
+           );
+
         LoadScript();
     }
 
@@ -227,11 +240,34 @@ public class CreatePacManMaze : MonoBehaviour
         }
     }
 
-    void SetCollision(GameObject gameObject)
+    static void SetCollision(GameObject gameObject)
     {
         BoxCollider2D boxCollider = gameObject.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = true;
         boxCollider.size = new Vector2(0.5f, 0.5f);
         gameObject.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    public static Vector2Int GetIndices(Vector2 position)
+    {
+        Vector2 indices = new Vector2 (
+            (walls[0, 0].gameObject.transform.position.y - position.y) / distanceBetweenWalls.y,
+            (position.x - walls[0, 0].gameObject.transform.position.x) / distanceBetweenWalls.x
+            );
+
+
+        //return new Vector2Int(Mathf.RoundToInt(indices.x), Mathf.RoundToInt(indices.y));
+        return new Vector2Int((int)(indices.x), (int)(indices.y));
+    }
+
+    public static Transform GetNode(Vector2Int indices)
+    {
+        if (walls == null)
+            return null;
+
+        if (walls[indices.x, indices.y].gameObject.CompareTag("Wall"))
+            return null;
+
+        return walls[indices.x, indices.y].gameObject.transform;
     }
 }
